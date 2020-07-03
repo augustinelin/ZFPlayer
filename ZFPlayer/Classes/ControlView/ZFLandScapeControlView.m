@@ -42,7 +42,9 @@
 @property (nonatomic, strong) UIView *bottomToolView;
 /// 播放或暂停按钮
 @property (nonatomic, strong) UIButton *playOrPauseBtn;
-/// 播放的当前时间 
+/// 缩小按钮
+@property (nonatomic, strong) UIButton *fullScreenBtn;
+/// 播放的当前时间
 @property (nonatomic, strong) UILabel *currentTimeLabel;
 /// 滑杆
 @property (nonatomic, strong) ZFSliderView *slider;
@@ -67,11 +69,13 @@
         [self.topToolView addSubview:self.backBtn];
         [self.topToolView addSubview:self.titleLabel];
         [self addSubview:self.bottomToolView];
-        [self.bottomToolView addSubview:self.playOrPauseBtn];
+        [self.bottomToolView addSubview:self.fullScreenBtn];
         [self.bottomToolView addSubview:self.currentTimeLabel];
         
         [self.bottomToolView addSubview:self.slider];
         [self.bottomToolView addSubview:self.totalTimeLabel];
+        
+        [self addSubview:self.playOrPauseBtn];
         [self addSubview:self.lockBtn];
         
         // 设置子控件的响应事件
@@ -93,7 +97,7 @@
     CGFloat min_view_w = self.bounds.size.width;
     CGFloat min_view_h = self.bounds.size.height;
     
-    CGFloat min_margin = 9; 
+    CGFloat min_margin = 9;
     
     min_x = 0;
     min_y = 0;
@@ -123,33 +127,63 @@
     min_y = min_view_h - min_h;
     min_w = min_view_w;
     self.bottomToolView.frame = CGRectMake(min_x, min_y, min_w, min_h);
-    
+//
+//    min_x = (iPhoneX && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ? 44: 15;
+//    min_y = 32;
+//    min_w = 30;
+//    min_h = 30;
+//    self.playOrPauseBtn.frame = CGRectMake(min_x, min_y, min_w, min_h);
+//
+//    min_x = self.playOrPauseBtn.zf_right + 4;
+//    min_y = 0;
+//    min_w = 62;
+//    min_h = 30;
+//    self.currentTimeLabel.frame = CGRectMake(min_x, min_y, min_w, min_h);
+//    self.currentTimeLabel.zf_centerY = self.playOrPauseBtn.zf_centerY;
+//
+//    min_w = 62;
+//    min_x = self.bottomToolView.zf_width - min_w - ((iPhoneX && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ? 44: min_margin);
+//    min_y = 0;
+//    min_h = 30;
+//    self.totalTimeLabel.frame = CGRectMake(min_x, min_y, min_w, min_h);
+//    self.totalTimeLabel.zf_centerY = self.playOrPauseBtn.zf_centerY;
+//
+//    min_x = self.currentTimeLabel.zf_right + 4;
+//    min_y = 0;
+//    min_w = self.totalTimeLabel.zf_left - min_x - 4;
+//    min_h = 30;
+//    self.slider.frame = CGRectMake(min_x, min_y, min_w, min_h);
+//    self.slider.zf_centerY = self.playOrPauseBtn.zf_centerY;
     min_x = (iPhoneX && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ? 44: 15;
-    min_y = 32;
-    min_w = 30;
-    min_h = 30;
-    self.playOrPauseBtn.frame = CGRectMake(min_x, min_y, min_w, min_h);
-    
-    min_x = self.playOrPauseBtn.zf_right + 4;
+
     min_y = 0;
     min_w = 62;
     min_h = 30;
     self.currentTimeLabel.frame = CGRectMake(min_x, min_y, min_w, min_h);
-    self.currentTimeLabel.zf_centerY = self.playOrPauseBtn.zf_centerY;
+    self.currentTimeLabel.zf_centerY = self.fullScreenBtn.zf_centerY;
+    
+    
+    min_w = 30;
+    min_x = self.bottomToolView.zf_width - min_w - ((iPhoneX && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ? 44: min_margin);
+    min_y = 32;
+    min_h = 30;
+    self.fullScreenBtn.frame = CGRectMake(min_x, min_y, min_w, min_h);
+    
     
     min_w = 62;
-    min_x = self.bottomToolView.zf_width - min_w - ((iPhoneX && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ? 44: min_margin);
+    min_x = self.fullScreenBtn.zf_left - 4 - min_w;
     min_y = 0;
     min_h = 30;
     self.totalTimeLabel.frame = CGRectMake(min_x, min_y, min_w, min_h);
-    self.totalTimeLabel.zf_centerY = self.playOrPauseBtn.zf_centerY;
+    self.totalTimeLabel.zf_centerY = self.fullScreenBtn.zf_centerY;
     
     min_x = self.currentTimeLabel.zf_right + 4;
     min_y = 0;
     min_w = self.totalTimeLabel.zf_left - min_x - 4;
     min_h = 30;
     self.slider.frame = CGRectMake(min_x, min_y, min_w, min_h);
-    self.slider.zf_centerY = self.playOrPauseBtn.zf_centerY;
+    self.slider.zf_centerY = self.fullScreenBtn.zf_centerY;
+    
     
     min_x = (iPhoneX && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ? 50: 18;
     min_y = 0;
@@ -158,6 +192,16 @@
     self.lockBtn.frame = CGRectMake(min_x, min_y, min_w, min_h);
     self.lockBtn.zf_centerY = self.zf_centerY;
     
+    
+    min_x = (iPhoneX && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ? 200: 180;
+    min_y = 0;
+    min_w = 40;
+    min_h = 40;
+//    self.playOrPauseBtn.frame = CGRectMake(min_x, min_y, min_w, min_h);
+    self.playOrPauseBtn.center = self.center;
+    [self.playOrPauseBtn setZf_size:CGSizeMake(min_w, min_h)];
+    self.playOrPauseBtn.zf_centerY = self.zf_centerY;
+
     if (!self.isShow) {
         self.topToolView.zf_y = -self.topToolView.zf_height;
         self.bottomToolView.zf_y = self.zf_height;
@@ -176,6 +220,9 @@
     [self.backBtn addTarget:self action:@selector(backBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.playOrPauseBtn addTarget:self action:@selector(playPauseButtonClickAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.lockBtn addTarget:self action:@selector(lockButtonClickAction:) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self.fullScreenBtn addTarget:self action:@selector(backBtnClickAction:) forControlEvents:UIControlEventTouchUpInside];
+
 }
 
 #pragma mark - action
@@ -278,6 +325,7 @@
 
 - (void)showControlView {
     self.lockBtn.alpha               = 1;
+    self.playOrPauseBtn.alpha         = 1;
     self.isShow                      = YES;
     if (self.player.isLockedScreen) {
         self.topToolView.zf_y        = -self.topToolView.zf_height;
@@ -287,6 +335,8 @@
         self.bottomToolView.zf_y     = self.zf_height - self.bottomToolView.zf_height;
     }
     self.lockBtn.zf_left             = iPhoneX ? 50: 18;
+    self.playOrPauseBtn.zf_centerY   = self.zf_height / 2;
+
     self.player.statusBarHidden      = NO;
     if (self.player.isLockedScreen) {
         self.topToolView.alpha       = 0;
@@ -302,10 +352,14 @@
     self.topToolView.zf_y            = -self.topToolView.zf_height;
     self.bottomToolView.zf_y         = self.zf_height;
     self.lockBtn.zf_left             = iPhoneX ? -82: -47;
+    self.playOrPauseBtn.zf_centerY   = self.zf_height;
     self.player.statusBarHidden      = YES;
     self.topToolView.alpha           = 0;
     self.bottomToolView.alpha        = 0;
     self.lockBtn.alpha               = 0;
+    self.playOrPauseBtn.alpha        = 0;
+    
+
 }
 
 - (BOOL)shouldResponseGestureWithPoint:(CGPoint)point withGestureType:(ZFPlayerGestureType)type touch:(nonnull UITouch *)touch {
@@ -406,6 +460,16 @@
     }
     return _playOrPauseBtn;
 }
+-(UIButton *)fullScreenBtn{
+    
+    if (!_fullScreenBtn) {
+        _fullScreenBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_fullScreenBtn setImage:ZFPlayer_Image(@"ZFPlayer_fullscreen") forState:UIControlStateNormal];
+
+    }
+    return _fullScreenBtn;
+}
+
 
 - (UILabel *)currentTimeLabel {
     if (!_currentTimeLabel) {

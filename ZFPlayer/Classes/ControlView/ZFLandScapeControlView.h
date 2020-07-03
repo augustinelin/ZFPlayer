@@ -49,6 +49,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 播放或暂停按钮 
 @property (nonatomic, strong, readonly) UIButton *playOrPauseBtn;
 
+/// 缩小按钮
+@property (nonatomic, strong, readonly) UIButton *fullScreenBtn;
+
 /// 播放的当前时间
 @property (nonatomic, strong, readonly) UILabel *currentTimeLabel;
 

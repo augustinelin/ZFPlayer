@@ -330,8 +330,9 @@
 - (UIButton *)playOrPauseBtn {
     if (!_playOrPauseBtn) {
         _playOrPauseBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [_playOrPauseBtn setImage:ZFPlayer_Image(@"new_allPlay_44x44_") forState:UIControlStateNormal];
-        [_playOrPauseBtn setImage:ZFPlayer_Image(@"new_allPause_44x44_") forState:UIControlStateSelected];
+        [_playOrPauseBtn setImage:ZFPlayer_Image(@"ZFPlayer_play") forState:UIControlStateNormal];
+        [_playOrPauseBtn setImage:ZFPlayer_Image(@"ZFPlayer_pause") forState:UIControlStateSelected];
+        
     }
     return _playOrPauseBtn;
 }
